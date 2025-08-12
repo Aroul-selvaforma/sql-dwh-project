@@ -1,3 +1,13 @@
+/*
+This stored procedure to load the silver layer completely
+We truncate the tables
+we do INSERT to load data from bronze tables
+
+no parameters  are used
+Usage Exemple:
+EXEC Silver.proc_load_silver;
+*/
+
 CREATE OR ALTER PROCEDURE silver.load_silver AS
 BEGIN
 DECLARE @start_time DATETIME , @end_time DATETIME, @silver_start_time DATETIME, @silver_end_time DATETIME
