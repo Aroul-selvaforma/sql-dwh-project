@@ -78,7 +78,7 @@ DECLARE @start_time DATETIME , @end_time DATETIME, @silver_start_time DATETIME, 
 		prd_id,
 		-- Transformations : Derived new columns (based on calculations of existing one)
 		REPLACE(SUBSTRING(prd_key, 1, 5), '-','_') AS cat_id,
-		REPLACE(SUBSTRING(prd_key, 7, LEN(prd_key)), '-','_') AS prd_key,
+		SUBSTRING(prd_key, 7, LEN(prd_key)) AS prd_key,
 		prd_nm,
 		--handling missing info
 		ISNULL(prd_cost,0) AS prd_cost,
