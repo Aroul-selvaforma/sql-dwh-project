@@ -1,0 +1,102 @@
+table 'dim date'
+	lineageTag: d25c32b7-d3d0-4be7-8a95-21c74c596b7e
+	dataCategory: Time
+
+	column Date
+		isKey
+		formatString: General Date
+		lineageTag: 8b0e99b8-bc10-4ab1-a417-82b01801ef97
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		formatString: 0
+		lineageTag: 7adec6e3-4c1f-4ad7-bac3-3c3054e786d9
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		lineageTag: 341271e0-5972-4a39-861e-d2b6719895d4
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Quarter]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Name'
+		lineageTag: f5f7016b-2326-476d-88c6-c533c1269004
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month Name]
+		sortByColumn: 'Month No'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month No'
+		formatString: 0
+		lineageTag: e1a94b9a-e99b-45dc-96f3-e0c55e774018
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month No]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month No Year'
+		formatString: 0
+		lineageTag: 63757147-0fbe-484c-86fc-05bc17af1bba
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month No Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week No'
+		formatString: 0
+		lineageTag: ae1ce927-91de-47ca-ace3-2ff4c348a23f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Week No]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Week'
+		lineageTag: 35abdb01-dee5-447f-83ee-782159c461a3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Day of Week]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month year'
+		lineageTag: 6cbd38b2-99c0-4b9c-981c-2a8925a93ba5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month year]
+		sortByColumn: 'Month No Year'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'dim date' = calculated
+		mode: import
+		source = ```
+				ADDCOLUMNS(CALENDARAUTO(),                    
+				    "Year", YEAR([Date]),
+				    "Quarter", "Q" & FORMAT(QUARTER([Date]), "0"),
+				    "Month Name", FORMAT([Date], "MMMM", "en-us"),
+				    "Month No", MONTH([Date]),
+				    "Month year", FORMAT([Date], "mmm-yyyy", "en-us"),
+				    "Month No Year", YEAR([Date]) * 100 + MONTH([Date]),
+				    "Week No", WEEKNUM([Date], 2), -- 2 = semaine commence lundi
+				    "Day of Week", FORMAT([Date], "dddd", "en-us")
+				)
+				
+				```
+
+	annotation PBI_Id = 47bcf7537d8a4b3f834dfa61447f9023
+

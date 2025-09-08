@@ -1,0 +1,96 @@
+table 'Measures table'
+	lineageTag: aa9b12de-f3c0-452b-9bfb-e22407788798
+
+	measure 'Total Cost' = SUM('gold fact_sales'[cost])
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 168722a4-94f6-4b85-b369-13081811a1fe
+
+		annotation PBI_FormatHint = {"currencyCulture":"fr-FR"}
+
+	measure 'Total Sales' = SUM('gold fact_sales'[sales_amount])
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 7635188f-98f9-48ce-bde2-3817738517f9
+
+		annotation PBI_FormatHint = {"currencyCulture":"fr-FR"}
+
+	measure 'Total Quantity' = SUM('gold fact_sales'[quantity])
+		formatString: 0
+		lineageTag: 02143755-43cd-4076-a2e9-44bd90f8f10a
+
+	measure 'Number of Orders' = DISTINCTCOUNT('gold fact_sales'[order_number])
+		formatString: 0
+		lineageTag: c5542b98-3007-46ab-af0a-ce286972f77e
+
+	measure Profit = [Total Sales] - [Total Cost]
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 120b96df-bc8d-4d41-8d70-0b16d6784e1a
+
+		annotation PBI_FormatHint = {"currencyCulture":"fr-FR"}
+
+	measure 'Avg. Sales' = AVERAGE('gold fact_sales'[sales_amount])
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: b5b1d5fa-e5bb-473f-a41f-6bb417bb8391
+
+		annotation PBI_FormatHint = {"currencyCulture":"fr-FR"}
+
+	measure 'Avg Sales per order' = DIVIDE([Total Sales], [Number of Orders], 0)
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: f7ce81ff-d295-4d49-962d-c63a4d2722b2
+
+		annotation PBI_FormatHint = {"currencyCulture":"fr-FR"}
+
+	measure selection = SELECTEDMEASURE()
+		lineageTag: d3645c37-02f9-4dc1-8566-bc40f5bd035e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Profit Margin' = DIVIDE([Profit],[Total Sales], 0)
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: abc7b90c-b8e7-475a-ac40-df1531afa81e
+
+	measure 'Sales Same period last year' = CALCULATE([Total Sales], SAMEPERIODLASTYEAR('dim date'[Date]))
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: c17800a0-3e27-42a4-8101-63654e978306
+
+		annotation PBI_FormatHint = {"currencyCulture":"fr-FR"}
+
+	measure 'Sales YTD' = TOTALYTD([Total Sales], 'dim date'[Date])
+		formatString: #,0.###############\ "€";-#,0.###############\ "€";#,0.###############\ "€"
+		lineageTag: 2bc0273b-998d-4d3f-a4eb-1eca3303a4fa
+
+		annotation PBI_FormatHint = {"currencyCulture":"fr-FR"}
+
+	measure 'Orders Same Period Last Year' = CALCULATE([Number of Orders], SAMEPERIODLASTYEAR('dim date'[Date]))
+		formatString: 0
+		lineageTag: 797d70be-f291-48e4-a46a-2c541a536dc5
+
+	measure 'Quantity Same Period Last Year' = CALCULATE([Total Quantity], SAMEPERIODLASTYEAR('dim date'[Date]))
+		formatString: 0
+		lineageTag: fcdd90cc-0ce8-4bb5-ae4f-27e747d0bfb3
+
+	measure 'Sales YoY' = DIVIDE([Total Sales] - [Sales Same period last year],[Sales Same period last year], 0)
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 8d541899-879d-4515-8e78-432d2bc9a106
+
+	column Column
+		formatString: 0
+		lineageTag: 2d1c982f-c446-4459-b769-83980aeb23ca
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Measures table' = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 76c53af4d5224c9e9daa9c3d5d41e498
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":"{}"}
+
+	annotation 277cc1b9-af89-4597-8e15-cacc25c0886b = ```
+			Une instruction Evaluate ne peut pas retourner une table sans colonnes.
+			
+			```
+

@@ -1,0 +1,25 @@
+model Model
+	culture: fr-FR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: fr-FR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBIDesktopVersion = 2.146.1254.0 (25.08)+791a7518fadc83da883d79322a2658aff57c8db3
+
+annotation PBI_QueryOrder = ["gold dim_customers","gold dim_products","gold fact_sales"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'gold dim_customers'
+ref table 'gold dim_products'
+ref table 'gold fact_sales'
+ref table 'dim date'
+ref table 'Measures table'
+ref table SelectedMeasure
+
+ref cultureInfo fr-FR
+

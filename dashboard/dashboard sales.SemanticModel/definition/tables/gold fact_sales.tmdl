@@ -1,0 +1,121 @@
+table 'gold fact_sales'
+	lineageTag: 8586664c-cfdd-42e0-8e64-1573dcdee796
+
+	column order_number
+		dataType: string
+		lineageTag: afd5f013-1647-4ed7-b450-170017f10426
+		summarizeBy: none
+		sourceColumn: order_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 70bfa76e-c984-4c7a-8a96-60be2bfb543c
+		summarizeBy: none
+		sourceColumn: product_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 91ead158-5927-48c7-a945-886f68cdf995
+		summarizeBy: none
+		sourceColumn: customer_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 72bafc56-b8cc-4ebb-a46c-810ac90f3a41
+		summarizeBy: none
+		sourceColumn: order_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column shipping_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 90647d98-7f73-4ff0-8695-ba154de0b9c2
+		summarizeBy: none
+		sourceColumn: shipping_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column due_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: fcac2bc2-c041-4362-b7d2-b553c3b182be
+		summarizeBy: none
+		sourceColumn: due_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column sales_amount
+		dataType: decimal
+		formatString: #,0.###############\ "€";-#,0.###############\ "€";#,0.###############\ "€"
+		lineageTag: 53eb73b9-0ae5-4e25-a616-7229f2a60f68
+		summarizeBy: sum
+		sourceColumn: sales_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"fr-FR"}
+
+	column quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: fec8572e-f2d9-4e63-8dcf-48b01cc88618
+		summarizeBy: sum
+		sourceColumn: quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: decimal
+		formatString: #,0.###############\ "€";-#,0.###############\ "€";#,0.###############\ "€"
+		lineageTag: 8aeb2a39-3592-4c09-b44e-9115e6c96c6f
+		summarizeBy: sum
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"fr-FR"}
+
+	column cost
+		dataType: decimal
+		formatString: #,0.###############\ "€";-#,0.###############\ "€";#,0.###############\ "€"
+		lineageTag: ee756a06-0144-41d5-b270-43854865d06c
+		summarizeBy: sum
+		sourceColumn: cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"fr-FR"}
+
+	partition 'gold fact_sales' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("localhost\SQLEXPRESS", "DataWarehouse"),
+				    gold_fact_sales = Source{[Schema="gold",Item="fact_sales"]}[Data],
+				    #"Type Decimal fixe" = Table.TransformColumnTypes(gold_fact_sales,{{"price", Currency.Type}, {"sales_amount", Currency.Type}}),
+				    #"Fusion dim_products" = Table.NestedJoin(#"Type Decimal fixe", {"product_key"}, #"gold dim_products", {"product_key"}, "gold dim_products", JoinKind.LeftOuter),
+				    #"cost from gold dim_products" = Table.ExpandTableColumn(#"Fusion dim_products", "gold dim_products", {"cost"}, {"cost"}),
+				    #"type of cost" = Table.TransformColumnTypes(#"cost from gold dim_products",{{"cost", Currency.Type}})
+				in
+				    #"type of cost"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

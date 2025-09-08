@@ -1,0 +1,110 @@
+table 'gold dim_products'
+	lineageTag: 07432378-48cb-47dd-b692-0fb968b13f82
+
+	column product_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 55d92f9f-6e35-44e1-87fa-f4f71e1d8ade
+		summarizeBy: none
+		sourceColumn: product_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 92ea4d3e-0dc6-40a9-8ba2-88330ca2f533
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_number
+		dataType: string
+		lineageTag: 70082533-25c8-4dda-ba62-5c8887b53211
+		summarizeBy: none
+		sourceColumn: product_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_name
+		dataType: string
+		lineageTag: 1513fd7b-9a99-4ef3-8451-c602373c9319
+		summarizeBy: none
+		sourceColumn: product_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column category_id
+		dataType: string
+		lineageTag: 60bffe72-e561-47c2-87ad-1dbe02b71a1f
+		summarizeBy: none
+		sourceColumn: category_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: 1d66b6d1-32e3-40a5-a4c0-b94c31665eca
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column subcategory
+		dataType: string
+		lineageTag: 628c8619-8c6d-4dcc-883f-208d5cfcd93c
+		summarizeBy: none
+		sourceColumn: subcategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column maintenance
+		dataType: string
+		lineageTag: d8f6a79a-d612-4662-992c-d78ed72b361f
+		summarizeBy: none
+		sourceColumn: maintenance
+
+		annotation SummarizationSetBy = Automatic
+
+	column cost
+		dataType: int64
+		formatString: 0
+		lineageTag: 5d0c4f9a-9715-43e1-b41e-f2927aaed139
+		summarizeBy: none
+		sourceColumn: cost
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_line
+		dataType: string
+		lineageTag: c6a11ba5-2ce0-4fe3-8a82-10325785e00f
+		summarizeBy: none
+		sourceColumn: product_line
+
+		annotation SummarizationSetBy = Automatic
+
+	column start_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2bf74533-ed44-4ffa-ae5c-0c35af52bdab
+		summarizeBy: none
+		sourceColumn: start_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition 'gold dim_products' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("localhost\SQLEXPRESS", "DataWarehouse"),
+				    gold_dim_products = Source{[Schema="gold",Item="dim_products"]}[Data]
+				in
+				    gold_dim_products
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

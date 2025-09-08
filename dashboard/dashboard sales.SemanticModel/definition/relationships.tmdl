@@ -1,0 +1,22 @@
+relationship AutoDetected_143d3739-85a5-46f1-b3c8-703b2920d7ff
+	fromColumn: 'gold fact_sales'.customer_key
+	toColumn: 'gold dim_customers'.customer_key
+
+relationship AutoDetected_24f5f0df-1e12-4acd-bfb6-182ec3d8a226
+	fromColumn: 'gold fact_sales'.product_key
+	toColumn: 'gold dim_products'.product_key
+
+relationship 7fc1f898-dab7-38a4-5c64-be20c8e51055
+	fromColumn: 'gold fact_sales'.order_date
+	toColumn: 'dim date'.Date
+
+relationship 88c7c628-0e16-2582-6616-7ce6b6c81392
+	isActive: false
+	fromColumn: 'gold fact_sales'.due_date
+	toColumn: 'dim date'.Date
+
+relationship 2acf0df1-3d55-5ea9-8395-5ee147e353f4
+	isActive: false
+	fromColumn: 'gold fact_sales'.shipping_date
+	toColumn: 'dim date'.Date
+

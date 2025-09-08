@@ -1,0 +1,56 @@
+table SelectedMeasure
+	lineageTag: 7a7ff27e-d51d-496b-9395-1e32af96a9de
+
+	measure 'Previous Year SM' = CALCULATE(SELECTEDMEASURE(), PREVIOUSYEAR('dim date'[Date]))
+		lineageTag: 5a67e54b-148a-41fd-8ea3-80f593a16429
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SelectedMeasure
+		lineageTag: 67c05a26-7c87-4c2b-b187-b443025fadf1
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'SelectedMeasure Commande'
+
+		relatedColumnDetails
+			groupByColumn: 'SelectedMeasure Champs'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SelectedMeasure Champs'
+		isHidden
+		lineageTag: 7a985a31-7d2d-474e-afcc-b031dd219d32
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'SelectedMeasure Commande'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SelectedMeasure Commande'
+		isHidden
+		formatString: 0
+		lineageTag: efcb93e8-e26f-44d4-8dc0-9d7ae283c3b5
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SelectedMeasure = calculated
+		mode: import
+		source =
+				{
+				    ("Total Sales", NAMEOF('Measures table'[Total Sales]), 0),
+				    ("Total Quantity", NAMEOF('Measures table'[Total Quantity]), 1),
+				    ("Number of Orders", NAMEOF('Measures table'[Number of Orders]), 2),
+				    ("Avg. Sales", NAMEOF('Measures table'[Avg. Sales]), 3),
+				    ("Avg Sales per order", NAMEOF('Measures table'[Avg Sales per order]), 4)
+				}
+
+	annotation PBI_Id = 79196f115b454e13bddd38ae0ecaca47
+
