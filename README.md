@@ -19,9 +19,9 @@ This project involves:
 1. **Data Architecture**: Designing a Modern Data Warehouse Using Medallion Architecture **Bronze**, **Silver**, and **Gold** layers.
 2. **ETL Pipelines**: Extracting, transforming, and loading data from source systems into the warehouse.
 3. **Data Modeling**: Developing fact and dimension tables optimized for analytical queries.
-4. **Analytics & Reporting**: Creating SQL-based reports and dashboards for actionable insights.
+4. **Analytics & Reporting**: Power BI reports for actionable insights.
 
-
+technologies : Microsoft SQL Server for data engineering and Microsoft Power BI for the dashboard creation
 # Projet Data Warehouse et Analytics
 Ce projet présente une solution complète de data warehousing et d’analytique, allant de la construction d’un entrepôt de données à la génération d’insights exploitables.
 Conçu comme un projet de portfolio, il met en avant les meilleures pratiques du secteur en data engineering et analytics.
@@ -38,6 +38,13 @@ Ce projet comprend :
 Architecture des données : Conception d’un entrepôt de données moderne en utilisant les couches Bronze, Silver et Gold de l' Architecture Medaillon.
 Pipelines ETL : Extraction, transformation et chargement des données depuis les systèmes sources vers l’entrepôt.
 Modélisation des données : Création de tables de faits et de dimensions optimisées pour les requêtes analytiques.
-Analytique et reporting : Création de rapports et de tableaux de bord basés sur SQL pour générer des insights exploitables.
+Analytique et reporting : Création de rapports sur Power BI pour générer des insights exploitables.
 
-About Me
+Technologies utilisées : Microsoft SQL Server pour la partie Data Engineering et Microsoft Power Bi pour la crétion de dashboard
+
+<img width="1146" height="491" alt="Data Flow" src="https://github.com/user-attachments/assets/342aca79-1644-431a-b3aa-96fa9d2f29cc" />
+
+
+About Me : 
+Aroul SELVARADJOU
+https://selvaforma.wordpress.com/a-propos/
