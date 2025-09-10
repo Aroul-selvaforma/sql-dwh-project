@@ -40,7 +40,7 @@ Pipelines ETL : Extraction, transformation et chargement des données depuis les
 Modélisation des données : Création de tables de faits et de dimensions optimisées pour les requêtes analytiques.
 Analytique et reporting : Création de rapports sur Power BI pour générer des insights exploitables.
 
-Technologies utilisées : Microsoft SQL Server pour la partie Data Engineering et Microsoft Power Bi pour la crétion de dashboard
+Technologies utilisées : Microsoft SQL Server pour la partie Data Engineering et Microsoft Power Bi pour la création de dashboard
 
 <img width="1146" height="491" alt="Data Flow" src="https://github.com/user-attachments/assets/342aca79-1644-431a-b3aa-96fa9d2f29cc" />
 
